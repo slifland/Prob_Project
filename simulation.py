@@ -1,4 +1,5 @@
 import random_number_generator
+import math
 random = random_number_generator.random_number_generator(1000)
 #random_nums = random.random(53)
 
@@ -9,18 +10,41 @@ def run_simulation(n : int):
     wait_times = []
     for i in range(0, n):
         wait_times.append(run_customer())
+        #print(wait_times[i])
     statistics = calculateStatistics(wait_times)
+    print(statistics)
 
 #simulates a single caller interaction and returns the wait time until they respond
-def run_customer() -> int:
+def run_customer(iteration=0) -> float:
      wait_time = 0
-     return wait_time
+     if(iteration > 4):
+         return wait_time
+     wait_time += 6 #picking up her phone and dialing a number
+     first_random = random.next()
+     #using line
+     if(first_random <= 0.2):
+         wait_time += 3
+         return wait_time + run_customer(iteration + 1) + 1
+     #wait for 5 rings
+     elif (first_random <= 0.5):
+         wait_time += 25
+         return wait_time + run_customer(iteration + 1) + 1
+     #customer is available
+     else:
+         random_variable = exponential_random(random.next(), 12)
+         if(random_variable <= 25):
+             return wait_time + random_variable +  1
+         else:
+             return 25 + run_customer(iteration + 1) + 1
+ 
+def exponential_random(x : float, lamda : float) -> int:
+    x = - (1/lamda) * math.log(1 - x)
+    return x
 
-def calculateStatistics(data : list[int]) -> dict[str : float]:
+def calculateStatistics(data : list[float]) -> dict[str : float]:
     statistics = {}
-    data = data.sort()
+    data.sort()
     statistics['mean'] = sum(data) / len(data)
-    statistics['stddev'] = 0.0
     statistics['median'] = data[len(data) // 2]
     statistics['first_quartile'] = data[len(data) // 4]
     statistics['third_quartile'] = data[len(data) * (3 // 4)]
