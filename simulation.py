@@ -53,7 +53,7 @@ def calculateStatistics(data : list[float]) -> dict[str : float]:
     statistics['W > 40'] = 1 - calc_prob_under(data, 40)
     w_5 = 50
     w_6 = 60
-    w_7 = 80
+    w_7 = 100
     statistics[f'W > {w_5}'] = 1 - calc_prob_under(data, w_5)
     statistics[f'W > {w_6}'] = 1 - calc_prob_under(data, w_6)
     statistics[f'W > {w_7}'] = 1 - calc_prob_under(data, w_7)
