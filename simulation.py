@@ -38,7 +38,7 @@ def run_customer(iteration=0) -> float:
              return wait_time + 25 + run_customer(iteration + 1) + 1
  
 def exponential_random(x : float, lamda : float) -> float:
-    return (-math.log(x)) / lamda
+    return (-math.log(1-x)) / lamda
 
 def calculateStatistics(data : list[float]) -> dict[str : float]:
     statistics = {}
